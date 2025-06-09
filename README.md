@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧠 Multi-Modal AI Agent
 
-## Getting Started
+This project is a full-stack implementation of a **multi-modal AI assistant** built with:
 
-First, run the development server:
+- **Next.js 14** (App Router, TypeScript)
+- **GPT-4o** for text + vision reasoning
+- **LangChain** for agent logic and tool execution
+- **Whisper API** for voice transcription
+- **Redis + BullMQ** for queueing and background workers
+- **Prometheus + Winston** for observability
+- **Adaptive cost control**, multi-agent architecture, and token usage tracking
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## ✨ Features
+
+- 🔁 **Autonomous Agent Loop** – Think, plan, act pattern
+- 🤖 **Multi-Agent Support** – SalesBot, SupportBot, etc. from same backend
+- 🎤 **Voice & Vision Inputs** – Whisper + OpenAI Vision API
+- 📦 **Async Processing** – BullMQ-based job queue
+- 💰 **Cost Monitoring** – Token tracking and adaptive GPT model fallback
+- 📈 **Prometheus Metrics** – Token usage, job count, system health
+- 🔔 **Alerting** – Slack/Discord webhook alerts on failures
+- 🚀 **Deployment Ready** – Vercel + Railway compatible
+
+## 🧱 Project Structure
+
+```structure
+/src
+  /app            → Next.js routes
+  /components     → Reusable UI elements
+  /agents         → Multi-agent logic (support, sales, etc.)
+  /services       → LangChain, OpenAI, Redis, worker logic
+  /workers        → BullMQ background worker
+  /queue          → BullMQ queue setup
+  /utils          → Token tracker, logger, alert system
+  /metrics        → Prometheus config
+/scripts          → CLI tools like token usage report
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Configure `.env.local`:
 
-## Learn More
+```env
+OPENAI_API_KEY=sk-xxx
+NEXT_PUBLIC_OPENAI_MODEL=gpt-4o
+WHISPER_API_KEY=sk-xxx
+REDIS_URL=redis://default:yourpassword@host:port
+ALERT_WEBHOOK_URL=https://hooks.slack.com/services/XXX
+```
 
-To learn more about Next.js, take a look at the following resources:
+Start the worker:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npx ts-node workerRunner.ts
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📊 Monitoring
 
-## Deploy on Vercel
+- Visit `/api/metrics` for Prometheus scraping
+- Ping `/api/health` for uptime monitoring
+- Check `token-logs.json` or run CLI: `ts-node scripts/usageReport.ts`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📚 Roadmap
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [ ] Integrate LangGraph or ReAct for planning loops
+- [ ] Deploy via Vercel/Render full stack
+- [ ] Add frontend UI for each agent
+- [ ] Slack/Telegram integrations
+
+## 🧠 Built by Darshan Chobarkar
+
+Open to contributions, suggestions, and future collaborations!
+
+GitHub: [@dchobarkar](https://github.com/dchobarkar)  
+LinkedIn: [dchobarkar](https://www.linkedin.com/in/dchobarkar/)
